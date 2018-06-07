@@ -9,7 +9,8 @@
     http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <mvc:annotation-driven />
+    <context:annotation-config/>
+    <mvc:annotation-driven/>
     <context:component-scan base-package="spring.*" />
 
     <bean name="jsonMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
@@ -27,7 +28,17 @@
         </property>
     </bean>
 
+    <bean id="employeeManager" class="spring.manager.EmployeeManagerImpl">
+        <property name="dataSource" ref="datasource" />
+    </bean>
 
+    <bean id="datasource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://localhost:3306/testdb" />
+        <property name="username" value="root" />
+        <property name="password" value="root" />
+    </bean>
 
+    <import resource="jdbc-config.xml" />
 
 </beans>

@@ -1,8 +1,8 @@
-package spring.manager;
+package spring.service;
 
 import spring.model.Employee;
 
-public interface EmployeeManager {
+public interface EmployeeService {
 
     Employee queryById(Integer id);
 
