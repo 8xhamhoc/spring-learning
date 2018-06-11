@@ -1,7 +1,6 @@
 package spring.manager;
 
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
-import org.springframework.stereotype.Repository;
 import spring.model.Employee;
 import spring.model.EmployeeRowMapper;
 
