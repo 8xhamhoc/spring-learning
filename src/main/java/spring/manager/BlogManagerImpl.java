@@ -4,6 +4,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import spring.model.Blog;
 import spring.model.BlogRowMapper;
+import spring.request.BlogPageRequest;
+import spring.util.Page;
+import spring.util.PaginationHelper;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
@@ -32,6 +35,15 @@ public class BlogManagerImpl implements BlogManager {
         String sql = "SELECT * FROM blog";
         List<Blog> blogs = jdbcTemplate.query(sql, new MyBlogRowMapper());
         return blogs;
+    }
+
+    @Override
+    public List<Blog> find(BlogPageRequest pageRequest) {
+        PaginationHelper paginationHelper = new PaginationHelper();
+        Page<Blog> blogPage = paginationHelper.fetch(jdbcTemplate, pageRequest.getSqlCountRows(),
+                pageRequest.getSqlFetchRows(), pageRequest.getArgs(), pageRequest.getPageNo(), pageRequest.getPageSize(),
+                new BlogRowMapper());
+        return blogPage.getPageItems();
     }
 
     private class MyBlogRowMapper implements RowMapper<Blog> {

@@ -1,10 +1,9 @@
 package spring.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import spring.model.Employee;
+import spring.request.EmployeeRequest;
 import spring.service.EmployeeService;
 
 @RestController
@@ -17,6 +16,12 @@ public class EmployeeController {
     public Employee findById(@PathVariable("id") String id) {
         int empId = Integer.parseInt(id);
         return employeeService.queryById(empId);
+    }
+
+
+    @PostMapping("/employee")
+    public Employee findById(@RequestBody EmployeeRequest request) {
+        return employeeService.queryById(request.getId());
     }
 
 }
