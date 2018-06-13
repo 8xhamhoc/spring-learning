@@ -28,4 +28,19 @@ public class BlogServiceImpl implements BlogService {
     public List<Blog> find(BlogPageRequest pageRequest) {
         return blogManager.find(pageRequest);
     }
+
+    @Override
+    public int save(Blog blog) {
+        return blogManager.save(blog);
+    }
+
+    @Override
+    public void update(Blog blog) {
+        blogManager.update(blog);
+    }
+
+    @Override
+    public int delete(int id) {
+        return blogManager.delete(id);
+    }
 }

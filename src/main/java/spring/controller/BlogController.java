@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import spring.model.Blog;
 import spring.request.BlogPageRequest;
+import spring.request.BlogRequest;
 import spring.request.GetBlogsByIndexRequest;
 import spring.service.BlogService;
 
@@ -33,6 +34,29 @@ public class BlogController {
         BlogPageRequest blogPageRequest = new BlogPageRequest(sqlCountRows, sqlFetchRows, new Object[] {}, request.getPageSize(), request.getPageNo());
         List<Blog> blogs = blogService.find(blogPageRequest);
         return blogs;
+    }
+
+    @PostMapping("/blog/add")
+    public int add(@RequestBody BlogRequest request) {
+        Blog blog = new Blog();
+        blog.setId(request.getId());
+        blog.setTitle(request.getTitle());
+        blog.setContent(request.getContent());
+        return blogService.save(blog);
+    }
+
+    @PutMapping("/blog")
+    public void update(@RequestBody BlogRequest request) {
+        Blog blog = new Blog();
+        blog.setId(request.getId());
+        blog.setTitle(request.getTitle());
+        blog.setContent(request.getContent());
+        blogService.update(blog);
+    }
+
+    @DeleteMapping("/blog")
+    public int delete(@RequestBody BlogRequest request) {
+        return blogService.delete(request.getId());
     }
 
 }

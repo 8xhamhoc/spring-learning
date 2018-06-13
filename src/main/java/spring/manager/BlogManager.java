@@ -13,4 +13,10 @@ public interface BlogManager {
 
     List<Blog> find(BlogPageRequest pageRequest);
 
+    int save(Blog blog);
+
+    void update(Blog blog);
+
+    int delete(int id);
+
 }

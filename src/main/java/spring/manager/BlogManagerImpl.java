@@ -46,6 +46,25 @@ public class BlogManagerImpl implements BlogManager {
         return blogPage.getPageItems();
     }
 
+    @Override
+    public int save(Blog blog) {
+        String sql = "INSERT INTO blog (id, title, content) VALUES(?, ?, ?)";
+        return jdbcTemplate.update(sql, blog.getId(), blog.getTitle(), blog.getContent());
+    }
+
+    @Override
+    public void update(Blog blog) {
+        String sql = "UPDATE blog SET content = ? WHERE id = ?";
+        int status = jdbcTemplate.update(sql, blog.getContent(), blog.getId());
+        System.out.println("===Update status: " + status);
+    }
+
+    @Override
+    public int delete(int id) {
+        String sql = "DELETE FROM blog WHERE id = ?";
+        return jdbcTemplate.update(sql, id);
+    }
+
     private class MyBlogRowMapper implements RowMapper<Blog> {
 
         @Override
