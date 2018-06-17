@@ -2,6 +2,7 @@ package spring.manager;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import spring.exception.BlogNotFoundException;
 import spring.model.Blog;
 import spring.model.BlogRowMapper;
 import spring.request.BlogPageRequest;
@@ -24,9 +25,17 @@ public class BlogManagerImpl implements BlogManager {
     }
 
     @Override
-    public Blog findById(Integer id) {
+    public Blog findById(Integer id) throws BlogNotFoundException {
         String sql = "SELECT * FROM blog WHERE id = ?";
-        Blog blog = jdbcTemplate.queryForObject(sql, new BlogRowMapper(), id);
+        Blog blog = null;
+        try {
+            blog = jdbcTemplate.queryForObject(sql, new BlogRowMapper(), id);
+            if (blog == null) {
+                throw new BlogNotFoundException("Blog does not exist");
+            }
+        } catch (Exception e) {
+            throw new BlogNotFoundException("Blog does not exist");
+        }
         return blog;
     }
 

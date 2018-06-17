@@ -2,6 +2,7 @@ package spring.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import spring.exception.BlogNotFoundException;
 import spring.manager.BlogManager;
 import spring.model.Blog;
 import spring.request.BlogPageRequest;
@@ -15,7 +16,7 @@ public class BlogServiceImpl implements BlogService {
     private BlogManager blogManager;
 
     @Override
-    public Blog findById(Integer id) {
+    public Blog findById(Integer id) throws BlogNotFoundException {
         return blogManager.findById(id);
     }
 

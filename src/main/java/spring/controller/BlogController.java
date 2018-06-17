@@ -2,6 +2,7 @@ package spring.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import spring.exception.BlogNotFoundException;
 import spring.model.Blog;
 import spring.request.BlogPageRequest;
 import spring.request.BlogRequest;
@@ -16,18 +17,18 @@ public class BlogController {
     @Autowired
     private BlogService blogService;
 
-    @GetMapping("/blog/{id}")
-    public Blog queryById(@PathVariable String id) {
+    @GetMapping("/blogs/{id}")
+    public Blog queryById(@PathVariable String id) throws BlogNotFoundException {
         int blogId = Integer.parseInt(id);
         return blogService.findById(blogId);
     }
 
-    @GetMapping("/blog")
+    @GetMapping("/blogs")
     public List<Blog> getBlogs() {
         return blogService.findAll();
     }
 
-    @PostMapping("/blog")
+    @PostMapping("/blogs")
     public List<Blog> getBlogsByIndex(@RequestBody GetBlogsByIndexRequest request) {
         String sqlCountRows = "SELECT count(*) FROM blog";
         String sqlFetchRows = "SELECT * FROM blog";
@@ -36,7 +37,7 @@ public class BlogController {
         return blogs;
     }
 
-    @PostMapping("/blog/add")
+    @PostMapping("/blogs/add")
     public int add(@RequestBody BlogRequest request) {
         Blog blog = new Blog();
         blog.setId(request.getId());
@@ -45,7 +46,7 @@ public class BlogController {
         return blogService.save(blog);
     }
 
-    @PutMapping("/blog")
+    @PutMapping("/blogs")
     public void update(@RequestBody BlogRequest request) {
         Blog blog = new Blog();
         blog.setId(request.getId());
@@ -54,7 +55,7 @@ public class BlogController {
         blogService.update(blog);
     }
 
-    @DeleteMapping("/blog")
+    @DeleteMapping("/blogs")
     public int delete(@RequestBody BlogRequest request) {
         return blogService.delete(request.getId());
     }
