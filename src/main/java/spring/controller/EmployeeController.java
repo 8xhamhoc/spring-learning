@@ -12,14 +12,14 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
-    @GetMapping("/employee/{id}")
+    @GetMapping("/employees/{id}")
     public Employee findById(@PathVariable("id") String id) {
         int empId = Integer.parseInt(id);
         return employeeService.queryById(empId);
     }
 
 
-    @PostMapping("/employee")
+    @PostMapping("/employees")
     public Employee findById(@RequestBody EmployeeRequest request) {
         return employeeService.queryById(request.getId());
     }

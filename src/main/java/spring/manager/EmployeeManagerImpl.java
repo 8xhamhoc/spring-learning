@@ -14,7 +14,13 @@ public class EmployeeManagerImpl extends JdbcDaoSupport implements EmployeeManag
     @Override
     public Employee queryById(Integer id) {
         String sql = "SELECT * FROM employee WHERE empId = ?";
-        Employee employee = this.getJdbcTemplate().queryForObject(sql, new EmployeeRowMapper(), id);
+//        Employee employee = this.getJdbcTemplate().queryForObject(sql, new EmployeeRowMapper(), id);
+        spring.entity.Employee employee1 = employeeRepository.findByName("David");
+        Employee employee = null;
+        if (employee1 != null) {
+            employee.setId(employee1.getId());
+            employee.setName(employee1.getName());
+        }
         return employee;
     }
 
